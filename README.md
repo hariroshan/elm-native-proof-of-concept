@@ -1,1 +1,1 @@
-# Proof of Concept of build elm mobile application with nativescript
+# Building an elm mobile application using nativescript: Proof of Concept
