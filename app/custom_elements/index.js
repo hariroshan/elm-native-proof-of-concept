@@ -81,62 +81,29 @@ const baseElement = (BaseElement) =>
     }
   }
 
-const Frame = {
-  tagName: "x-frame",
-  asElement: (UIElement) => class extends UIElement {
+const genericBuilder = (tagName) => ({
+  tagName,
+  asElement: (UIElment) => class extends UIElement {
     static get observedAttributes() {
       return []
     }
     init() {
-      console.log("x-frame init")
+      console.log(tagName, "init")
     }
     update() {
-      console.log("x-frame updated")
+      console.log(tagName, "updated")
     }
     render() {
-      console.log("x-frame render")
+      console.log(tagName, "render")
     }
   }
-}
+})
 
-const Page = {
-  tagName: "x-page",
-  asElement: (UIElement) => class extends UIElement {
-    static get observedAttributes() {
-      return []
-    }
-    init() {
-      console.log("x-page init")
-    }
-    update() {
-      console.log("x-page updated")
-    }
-    render() {
-      console.log("x-page render")
-    }
-  }
-}
+const Frame = genericBuilder("x-frame")
 
+const Page = genericBuilder("x-page")
 
-const Label = {
-  tagName: "x-label",
-  asElement: (UIElement) => class extends UIElement {
-    static get observedAttributes() {
-      return []
-    }
-    init() {
-      console.log("x-label init")
-    }
-    update() {
-      console.log("x-label updated")
-    }
-    render() {
-      console.log("x-label render")
-    }
-  }
-}
-
-
+const Label = genericBuilder("x-label")
 
 
 export default function (window) {
