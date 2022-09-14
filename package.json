@@ -1,0 +1,27 @@
+{
+  "name": "poc",
+  "main": "app/app.js",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@nativescript/core": "~8.3.0",
+    "@nativescript/theme": "~3.0.2",
+    "happy-dom": "^6.0.4",
+    "vm-shim": "^0.0.6"
+  },
+  "devDependencies": {
+    "@nativescript/ios": "8.3.3",
+    "@nativescript/webpack": "~5.0.6",
+    "buffer": "^6.0.3",
+    "elm": "^0.19.1-5",
+    "elm-webpack-loader": "^8.0.0",
+    "node-elm-compiler": "^5.0.6"
+  },
+  "scripts": {
+    "build:elm": "elm make src/Main.elm --output ./dist/elm.js",
+    "run:ios": "ns run ios",
+    "build:webpack": "webpack --mode development",
+    "build": "rollup -c",
+    "watch": "rollup -c -w -m"
+  }
+}
