@@ -1,5 +1,6 @@
 import { Button, Frame, Label, Page, StackLayout } from "@nativescript/core"
-import { window } from "./mock/window";
+import { Window } from "./mock/window";
+import customElements from "./custom_elements";
 
 const { runInContext } = require("vm-shim");
 import Elm from '../src/Main.elm';
@@ -67,9 +68,13 @@ const detailsPage = () => {
   return page;
 }
 
+function initElements(params) {
+  customElements(params)
+}
 
 
 export const start = () => {
+  const window = new Window();
   const document = window.document;
   /**
      * Patch `insertBefore` function to default reference node to null when passed undefined.
@@ -88,11 +93,34 @@ export const start = () => {
     return insertBefore.call(this, ...args)
   }
 
+
+  /**
+   * Build context for web scripts to with:
+   * - window
+   * - document
+   * - all of window globals
+   * - the compiled elm app
+   * - the app bindings to the native ui
+  */
+
+  // const app = {
+  //   mixins: [
+  //     withAttrs,
+  //     withProps,
+  //     withCreate,
+  //     withInitAndUpdate,
+  //     withMountAndRender,
+  //     withUnmount
+  //   ],
+
+  //   elements: Object.values(allElements)
+  // }
+
   const context = {
     Elm,
     window,
     document,
-    // initElements
+    initElements
   }
 
   /**
@@ -130,6 +158,10 @@ export const start = () => {
      * located in the root project directory.
     */
 
+  const defineCustomElements = `
+  initElements(window)
+  `
+
   const elmInitScript = `
   const el = Elm().Main.init({
     node: document.getElementById('root')
@@ -144,6 +176,7 @@ export const start = () => {
   */
 
   document.write(html)
+  runInContext(defineCustomElements, context);
   runInContext(elmInitScript, context)
   return init()
 }

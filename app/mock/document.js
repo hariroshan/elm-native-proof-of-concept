@@ -31,7 +31,7 @@ const Selection_1 = (require("../../node_modules/happy-dom/lib/selection/Selecti
    *
    * @param defaultView Default view.
    */
-  constructor() {
+  constructor(defaultView) {
       super();
       this.onreadystatechange = null;
       this.nodeType = Node_1.default.DOCUMENT_NODE;
@@ -44,7 +44,7 @@ const Selection_1 = (require("../../node_modules/happy-dom/lib/selection/Selecti
       this._isFirstWriteAfterOpen = false;
       this._cookie = '';
       this._selection = null;
-      this.defaultView = this.constructor._defaultView;
+      this.defaultView = defaultView //this.constructor._defaultView;
       this.implementation = new DOMImplementation_1.default(this);
       this._readyStateManager = new DocumentReadyStateManager_1.default(this.defaultView);
       const doctype = this.implementation.createDocumentType('html', '', '');

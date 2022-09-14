@@ -44,5 +44,10 @@ update msg model =
 
 view : Model -> Html Msg
 view _ =
-
-    text "New Sandbox"
+    Html.node "x-frame"
+        []
+        [ Html.node "x-page"
+            []
+            [ Html.node "x-label" [] []
+            ]
+        ]
