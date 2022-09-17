@@ -130,7 +130,6 @@ export default function ({ window, app }) {
 
   Application.run({
     create() {
-      console.log(window.document.getElementById("root").object)
       return window.document.getElementById("root").object
     }
   })

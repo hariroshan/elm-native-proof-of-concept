@@ -17,7 +17,6 @@ Element.asElement = (UIElement, { CustomEvent }) =>
 
     init() {
       this.object = new Page();
-      console.log(Element.tagName, "init")
     }
     initAttrs() {
       init(this.object, this.props);

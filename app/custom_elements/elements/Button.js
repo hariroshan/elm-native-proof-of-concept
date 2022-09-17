@@ -19,7 +19,6 @@ Element.asElement = (UIElement, { CustomEvent }) =>
     }
     initAttrs() {
       init(this.object, this.props);
-      console.log(this.props)
     }
     update() {
       console.log(Element.tagName, "update")
