@@ -4,7 +4,15 @@ import customElements from "./custom_elements";
 
 const { runInContext } = require("vm-shim");
 import Elm from '../src/Main.elm';
-// import Elm from '../dist/elm';
+import * as allElements from './custom_elements/elements';
+import {
+  withAttrs,
+  withProps,
+  withCreate,
+  withInitAndUpdate,
+  withMountAndRender,
+  withUnmount
+} from "./custom_elements/mixins";
 
 
 const init = () => ({
@@ -103,24 +111,24 @@ export const start = () => {
    * - the app bindings to the native ui
   */
 
-  // const app = {
-  //   mixins: [
-  //     withAttrs,
-  //     withProps,
-  //     withCreate,
-  //     withInitAndUpdate,
-  //     withMountAndRender,
-  //     withUnmount
-  //   ],
-
-  //   elements: Object.values(allElements)
-  // }
+  const app = {
+    mixins: [
+      withAttrs,
+      withProps,
+      withCreate,
+      withInitAndUpdate,
+      withMountAndRender,
+      withUnmount
+    ],
+    elements: Object.values(allElements)
+  }
 
   const context = {
     Elm,
     window,
     document,
-    initElements
+    initElements,
+    app
   }
 
   /**
@@ -142,7 +150,7 @@ export const start = () => {
             <title>App</title>
          </head>
          <body>
-            <div id='root'>
+            <div id='elm-root'>
                <!–– Content will be added here -->
             </div>
          </body>
@@ -159,12 +167,12 @@ export const start = () => {
     */
 
   const defineCustomElements = `
-  initElements(window)
+  initElements({window, app})
   `
 
   const elmInitScript = `
   const el = Elm().Main.init({
-    node: document.getElementById('root')
+    node: document.getElementById('elm-root')
   })
   console.log(el)
    `
@@ -177,6 +185,7 @@ export const start = () => {
 
   document.write(html)
   runInContext(defineCustomElements, context);
-  runInContext(elmInitScript, context)
-  return init()
+  runInContext(elmInitScript, context);
+
+  // return init()
 }

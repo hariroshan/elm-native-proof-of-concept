@@ -1,0 +1,36 @@
+{
+  "button": {
+    "tag": "x-button",
+    "props": [
+      "text",
+      "style"
+    ],
+    "events": []
+  },
+  "label": {
+    "tag": "x-label",
+    "props": [
+      "text"
+    ],
+    "events": []
+  },
+  "stackLayout": {
+    "tag": "x-stack-layout",
+    "props": [],
+    "events": []
+  },
+  "frame": {
+    "tag": "x-frame",
+    "props": [
+      "id"
+    ],
+    "events": []
+  },
+  "page": {
+    "tag": "x-page",
+    "props": [
+      "id"
+    ],
+    "events": []
+  }
+}

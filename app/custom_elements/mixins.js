@@ -1,4 +1,3 @@
-
 export const withAttrs = BaseElement =>
     class extends BaseElement {
         static get observedAttributes() {
@@ -25,8 +24,8 @@ export const withAttrs = BaseElement =>
 export const withProps = BaseElement =>
     class extends BaseElement {
         getProps() {
-            const attrs = this.getAttributes()
-            return this.attrsToProps ? this.attrsToProps(attrs) : attrs
+            // const attrs =
+            return this.getAttributes() //this.attrsToProps ? this.attrsToProps(attrs) : attrs
         }
     }
 
@@ -40,6 +39,7 @@ export const withCreate = BaseElement =>
 
             super()
             console.log(`${this.constructor.name} created`)
+            this.init()
         }
     }
 
@@ -48,13 +48,14 @@ export const withInitAndUpdate = BaseElement =>
         attributeChangedCallback() {
             this.props = this.getProps()
 
+
             /**
              * Pre-Connect section, add code here to receive
              * initial attributes before connect.
             */
 
             if (!this.isConnected) {
-                this.init(this.props)
+                this.initAttrs()
                 console.log(`${this.constructor.name} init`)
             }
 
@@ -64,7 +65,7 @@ export const withInitAndUpdate = BaseElement =>
             */
 
             if (this.isConnected) {
-                this.update(this.props, this.view)
+                this.update()
                 console.log(`${this.constructor.name} update`)
             }
         }
@@ -80,11 +81,12 @@ export const withMountAndRender = BaseElement =>
 
             if (this.isConnected) {
                 this.props = this.getProps()
-                this.view = this.render(this.props, {
-                    contentView: this.parentNode.view
-                })
-
-
+                // this.view = this.render(this.props, {
+                //     contentView: this.parentNode.view
+                // })
+                if (this.render) {
+                  this.render()
+                }
                 console.log(`${this.constructor.name} connected`)
             }
         }
@@ -93,7 +95,7 @@ export const withMountAndRender = BaseElement =>
 export const withUnmount = BaseElement =>
     class extends BaseElement {
         disconnectedCallback() {
-            this.view.dispose()
+            this.dispose()
             console.log(`${this.constructor.name} disconnected`)
         }
     }
