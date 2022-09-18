@@ -1,6 +1,6 @@
 const Element = {}
 import { Button } from "@nativescript/core";
-import { init } from "./Common";
+import { init, update } from "./Common";
 import elements_data from "./element_data.json";
 
 const button = elements_data["button"]
@@ -19,13 +19,30 @@ Element.asElement = (UIElement, { CustomEvent }) =>
     }
     initAttrs() {
       init(this.object, this.props);
+      //
     }
-    update() {
+    update(attr, newValue) {
       console.log(Element.tagName, "update")
+      update(this.object, attr, newValue);
+    }
+    render() {
+      requestAnimationFrame(() => {
+        const index = (Array.from(this.parentElement.children).indexOf(this))
+        this.parentElement.object.insertChild(this.object, index);
+      })
     }
     dispose() {
+      this.object.parent.removeChild(this.object);
       this.object.destroyNode();
       console.log(Element.tagName, "disposed")
+    }
+    addEventListener(event, callback) {
+      super.addEventListener(event, callback);
+      this.object.on(event, callback)
+    }
+    removeEventListener(event, callback) {
+      super.removeEventListener(event, callback);
+      this.object.off(event, callback);
     }
   }
 

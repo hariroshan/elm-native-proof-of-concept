@@ -4,6 +4,7 @@ import Browser
 import Html exposing (..)
 import Html.Attributes as Attrs
 import Html.Events as Event
+import Json.Decode as D
 
 
 main : Program () Model Msg
@@ -44,17 +45,39 @@ update msg model =
             { model | count = model.count + 1 }
 
 
+button : String -> msg -> Html msg
+button buttonText msg =
+    Html.node "x-button"
+        [ Attrs.attribute "text" buttonText
+        , Attrs.attribute "style" "color:blue"
+        , Event.on "tap" (D.succeed msg)
+        ]
+        []
+
+
+stackLayout : List (Attribute msg) -> List (Html msg) -> Html msg
+stackLayout attrs children =
+    Html.node "x-stack-layout" attrs children
+
+
 view : Model -> Html Msg
 view model =
     Html.node "x-frame"
         [ Attrs.attribute "id" "root" ]
         [ Html.node "x-page"
             []
-            [ Html.node "x-stack-layout"
+            [ stackLayout
                 []
-                [ Html.node "x-button" [ Attrs.attribute "text" "Increment", Attrs.attribute "style" "color:blue" ] []
-                , Html.node "x-label" [ Attrs.attribute "text" (model.count |> String.fromInt) ] []
-                , Html.node "x-button" [ Attrs.attribute "text" "Decrement" ] []
+                [ stackLayout
+                    []
+                    [ if model.count < 5 then
+                        button "Increment" Inc
+
+                      else
+                        Html.text ""
+                    , Html.node "x-label" [ Attrs.attribute "text" (model.count |> String.fromInt) ] []
+                    , button "Decrement" Dec
+                    ]
                 ]
             ]
         ]

@@ -1,6 +1,6 @@
 const Element = {}
 import { Label } from "@nativescript/core";
-import { init } from "./Common";
+import { init, update } from "./Common";
 import elements_data from "./element_data.json";
 
 const label = elements_data["label"]
@@ -14,15 +14,21 @@ Element.asElement = (UIElement, { CustomEvent }) =>
     static get observedAttributes() {
       return Element.propNames
     }
-
     init() {
       this.object = new Label();
     }
     initAttrs() {
       init(this.object, this.props);
     }
-    update() {
+    render() {
+      requestAnimationFrame(() => {
+        const index = (Array.from(this.parentElement.children).indexOf(this))
+        this.parentElement.object.insertChild(this.object, index);
+      })
+    }
+    update(attr, newValue) {
       console.log(Element.tagName, "update")
+      update(this.object, attr, newValue);
     }
     dispose() {
       this.object.destroyNode()

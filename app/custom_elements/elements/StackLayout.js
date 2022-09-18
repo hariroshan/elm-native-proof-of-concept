@@ -1,6 +1,6 @@
 const Element = {}
 import { StackLayout } from "@nativescript/core";
-import { init } from "./Common";
+import { init, update } from "./Common";
 import elements_data from "./element_data.json";
 
 const stackLayout = elements_data["stackLayout"]
@@ -21,7 +21,8 @@ Element.asElement = (UIElement, { CustomEvent }) =>
     initAttrs() {
       init(this.object, this.props);
     }
-    update() {
+    update(attr, newValue) {
+      update(this.object, attr, newValue);
       console.log(Element.tagName, "update")
     }
     dispose() {
@@ -29,11 +30,13 @@ Element.asElement = (UIElement, { CustomEvent }) =>
       console.log(Element.tagName, "disposed")
     }
     render() {
-      const children = this.children;
-      const childLength = children.length
-      for (let index = 0; index < childLength; index++) {
-        this.object.addChild(children[index].object)
-      }
+      requestAnimationFrame(() => {
+        if (this.parentElement.object.addChild) {
+          const index = (Array.from(this.parentElement.children).indexOf(this))
+          console.log(index);
+          this.parentElement.object.insertChild(this.object, index);
+        }
+      })
     }
   }
 

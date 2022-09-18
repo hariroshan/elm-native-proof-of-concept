@@ -22,6 +22,7 @@ Element.asElement = (UIElement, { CustomEvent }) =>
       init(this.object, this.props);
     }
     update() {
+      // update(this.object, attr, newValue);
       console.log(Element.tagName, "update")
     }
     dispose() {

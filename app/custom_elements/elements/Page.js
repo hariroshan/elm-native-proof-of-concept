@@ -1,6 +1,6 @@
 const Element = {}
 import { Page } from "@nativescript/core";
-import { init } from "./Common";
+import { init, update } from "./Common";
 import elements_data from "./element_data.json";
 
 const page = elements_data["page"]
@@ -21,7 +21,8 @@ Element.asElement = (UIElement, { CustomEvent }) =>
     initAttrs() {
       init(this.object, this.props);
     }
-    update() {
+    update(attr, newValue) {
+      update(this.object, attr, newValue);
       console.log(Element.tagName, "update")
     }
     dispose() {
@@ -31,6 +32,7 @@ Element.asElement = (UIElement, { CustomEvent }) =>
     render() {
       // page should have one child which is a layout
       this.object.content = this.children[0].object
+      // this.object.frame.content = this.object
     }
   }
 

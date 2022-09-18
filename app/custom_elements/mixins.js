@@ -21,14 +21,15 @@ export const withAttrs = BaseElement =>
     }
   }
 
-const getParsedProps = (props) => Object.keys(props).reduce((acc, cur) => Object.assign(acc, { [cur]: JSON.parse(props[cur]) }), {})
+// const getParsedProps = (props) => Object.keys(props).reduce((acc, cur) => Object.assign(acc, { [cur]: JSON.parse(props[cur]) }), {})
 
 
 export const withProps = BaseElement =>
   class extends BaseElement {
     getProps() {
-      // const attrs =
-      return getParsedProps(this.getAttributes()) //this.attrsToProps ? this.attrsToProps(attrs) : attrs
+      const attrs = this.getAttributes()
+      // console.log(attrs);
+      return (attrs) //this.attrsToProps ? this.attrsToProps(attrs) : attrs
     }
   }
 
@@ -48,7 +49,8 @@ export const withCreate = BaseElement =>
 
 export const withInitAndUpdate = BaseElement =>
   class extends BaseElement {
-    attributeChangedCallback() {
+    attributeChangedCallback(name, old, newValue) {
+      // console.log(name, old, newValue);
       this.props = this.getProps()
 
 
@@ -68,7 +70,7 @@ export const withInitAndUpdate = BaseElement =>
       */
 
       if (this.isConnected) {
-        this.update()
+        this.update(name, newValue)
         console.log(`${this.constructor.name} update`)
       }
     }
@@ -83,7 +85,7 @@ export const withMountAndRender = BaseElement =>
       */
 
       if (this.isConnected) {
-        this.props = this.getProps()
+        // this.props = this.getProps()
         // this.view = this.render(this.props, {
         //     contentView: this.parentNode.view
         // })
