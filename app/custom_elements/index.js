@@ -130,7 +130,7 @@ export default function ({ window, app }) {
 
   Application.run({
     create() {
-      return window.document.getElementById("root").object
+      return window.document.getElementById("elm-root").children[0].object
     }
   })
 }

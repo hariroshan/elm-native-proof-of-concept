@@ -31,9 +31,8 @@ Element.asElement = (UIElement, { CustomEvent }) =>
     }
     render() {
       requestAnimationFrame(() => {
-        if (this.parentElement.object.addChild) {
+        if (this.parentElement.object.insertChild) {
           const index = (Array.from(this.parentElement.children).indexOf(this))
-          console.log(index);
           this.parentElement.object.insertChild(this.object, index);
         }
       })

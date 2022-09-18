@@ -63,7 +63,7 @@ stackLayout attrs children =
 view : Model -> Html Msg
 view model =
     Html.node "x-frame"
-        [ Attrs.attribute "id" "root" ]
+        []
         [ Html.node "x-page"
             []
             [ stackLayout
