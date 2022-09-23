@@ -8,8 +8,8 @@ function setAttribute(key, value, object) {
 }
 
 function assign_deep(object, keys, i, value) {
-  object[keys[i]] = (keys.length - 1 === i) ? value : assign_deep(object[keys[i]], keys, i + 1, value)
-  return object
+  if (keys.length - 1 === i) return (object[keys[i]] = value);
+  assign_deep(object[keys[i]], keys, i + 1, value)
 }
 
 export const init = (object, props) => {
