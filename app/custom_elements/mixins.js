@@ -7,10 +7,12 @@ export const withAttrs = BaseElement =>
     getAttributes() {
       const getAttrs = (attrs, attrName) => {
         const attr = this.getAttribute(attrName) || (attrName !== 'style' ? this[attrName] : null)
+        const attrNameMap =
+          attrName === "class" ? "className" : attrName
 
         if (attr != null) {
           Object.assign(attrs, {
-            [attrName]: attr
+            [attrNameMap]: attr
           })
         }
 
@@ -59,20 +61,20 @@ export const withInitAndUpdate = BaseElement =>
        * initial attributes before connect.
       */
 
-      if (!this.isConnected) {
+      /* if (!this.isConnected) {
         this.initAttrs()
         console.log(`${this.constructor.name} init`)
-      }
+      } */
 
       /**
        * Update section, add code here to manage updating
        * with new attributes after connect.
       */
 
-      if (this.isConnected) {
-        this.update(name, newValue)
-        console.log(`${this.constructor.name} update`)
-      }
+     this.update(name, newValue)
+     console.log(`${this.constructor.name} update`)
+      // if (this.isConnected) {
+      // }
     }
   }
 
@@ -102,6 +104,18 @@ export const withUnmount = BaseElement =>
     disconnectedCallback() {
       this.dispose()
       console.log(`${this.constructor.name} disconnected`)
+    }
+  }
+
+export const withEventListener = BaseElement =>
+  class extends BaseElement {
+    addEventListener(event, callback) {
+      super.addEventListener(event, callback);
+      this.object.on(event, callback)
+    }
+    removeEventListener(event, callback) {
+      super.removeEventListener(event, callback);
+      this.object.off(event, callback);
     }
   }
 

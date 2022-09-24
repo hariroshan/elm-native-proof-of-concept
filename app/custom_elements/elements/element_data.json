@@ -3,7 +3,8 @@
     "tag": "x-button",
     "props": [
       "text",
-      "style"
+      "style",
+      "class"
     ],
     "events": []
   },

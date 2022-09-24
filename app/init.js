@@ -11,7 +11,8 @@ import {
   withCreate,
   withInitAndUpdate,
   withMountAndRender,
-  withUnmount
+  withUnmount,
+  withEventListener
 } from "./custom_elements/mixins";
 
 
@@ -118,7 +119,8 @@ export const start = () => {
       withCreate,
       withInitAndUpdate,
       withMountAndRender,
-      withUnmount
+      withUnmount,
+      withEventListener
     ],
     elements: Object.values(allElements)
   }

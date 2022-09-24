@@ -19,21 +19,25 @@ Element.asElement = (UIElement, { CustomEvent }) =>
       this.object = new Frame();
     }
     initAttrs() {
+
       init(this.object, this.props);
     }
-    update() {
+    update(attr, newValue) {
       // update(this.object, attr, newValue);
       console.log(Element.tagName, "update")
+      update(this.object, attr, newValue);
     }
     dispose() {
       this.object.destroyNode();
       console.log(Element.tagName, "disposed")
     }
-    render() {
-      const child = this.children[0];
+    pageAdded() {
+      this.navigate(this.children[this.children.length - 1])
+    }
+    navigate(child) {
       this.object.navigate({
         create() {
-          // Frame should have one child which is page
+          child.dispatchEvent(new CustomEvent("created", { dataEvent: "e" }))
           return child.object
         }
       })

@@ -28,10 +28,16 @@ Element.asElement = (UIElement, { CustomEvent }) =>
     dispose() {
       this.object.destroyNode();
       console.log(Element.tagName, "disposed")
+      // this.dispatchEvent(new CustomEvent("destory", {dataEvent: "e"}))
     }
     render() {
       // page should have one child which is a layout
       this.object.content = this.children[0].object
+      requestAnimationFrame(() => {
+        // const index = (Array.from(this.parentElement.children).indexOf(this))
+        this.parentElement.pageAdded();
+      })
+
       // this.object.frame.content = this.object
     }
   }

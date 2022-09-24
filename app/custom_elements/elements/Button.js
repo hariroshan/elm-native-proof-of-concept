@@ -18,8 +18,8 @@ Element.asElement = (UIElement, { CustomEvent }) =>
       this.object = new Button();
     }
     initAttrs() {
+      console.log(this.props);
       init(this.object, this.props);
-      //
     }
     update(attr, newValue) {
       console.log(Element.tagName, "update")
@@ -35,14 +35,6 @@ Element.asElement = (UIElement, { CustomEvent }) =>
       this.object.parent.removeChild(this.object);
       this.object.destroyNode();
       console.log(Element.tagName, "disposed")
-    }
-    addEventListener(event, callback) {
-      super.addEventListener(event, callback);
-      this.object.on(event, callback)
-    }
-    removeEventListener(event, callback) {
-      super.removeEventListener(event, callback);
-      this.object.off(event, callback);
     }
   }
 
